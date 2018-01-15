@@ -1,0 +1,63 @@
+{include file="public/top"}
+<!--body wrapper start-->
+<div class="wrapper">
+    <section class="panel">
+        <header class="panel-heading">
+            公告编辑                           
+        </header>
+        <div class="panel-body">
+            <form action="{:url('insertNotice')}" class="form-horizontal" method="post">
+
+                <div class="form-group">
+                    <label class="control-label col-md-3">公告显示</label>
+                    <div class="col-md-4 col-xs-11">
+                       <textarea class="form-control" rows="3" name="content">{$noticeInfo['content']}</textarea>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-3">显示时间</label>
+                    <div class="col-md-4 col-xs-11">
+                         <input class="form-control form-control-inline input-medium default-date-picker" size="16" type="text" value="{$noticeInfo['showtime']}" name="time" placeholder="公告显示时间，单位秒">
+                    </div>
+                </div>
+
+                <div class="form-group icheck green">               
+                    <label class="control-label col-md-3">状态</label>
+                    <div class="col-md-4 col-xs-11">
+                        <div class="radio list-inline">    
+                            <label><input tabindex="3" type="radio"  name="status" value="1" <?php if($noticeInfo['status'] ==1){?>checked<?php }?>>开启</label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+
+
+                        <div class="radio list-inline">    
+                            <label><input tabindex="3" type="radio"  name="status" value="0" <?php if($noticeInfo['status'] ==0){?>checked<?php }?>>关闭</label>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3"></label>
+                    <div class="col-md-4 col-xs-11">
+                        <button class="btn btn-success" type="submit"> 保存</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>
+<!--<script>
+    function search_member() {
+        var id = $("#ID").val();
+        var nickname = $("#nickname").val();
+        location.href = "/admin.php/notice/insertNotice.html?ID="+id+"&nickname="+nickname
+    }
+</script>-->
+<!--body wrapper end-->
+{include file="public/bottom"}
+

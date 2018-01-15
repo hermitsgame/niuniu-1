@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>登录账号</title>
+    <meta name="keywords" content="开心牛牛-马克">
+    <meta name="description" content="提供休闲娱乐。">
+    <script type="text/javascript" src="/static/login/js/rem.js"></script>
+    <link rel="stylesheet" href="/static/login/css/base.css" />
+    <link rel="stylesheet" href="/static/login/css/account.css" />
+    <link rel="stylesheet" href="/static/login/css/wxalert.css?v=10" />
+
+</head>
+<body>
+<div class="wxAlert" id="wxAlert" style="display:none">
+    <img class="wxPeople ani-people" src="./images/wxShare.png" />
+    <!--<img class="wxLang ani-wave" src="../images/water.png"/>-->
+    <div class="wxLang bgSize ani-wave"></div>
+    <p>点击右上方图标，在浏览器中打开</p>
+</div>
+
+
+<section class="wrap pos-r scroll scroll-active">
+    <div class="form-wrap bg-size">
+        <div class="form-box">
+            <p class="title">登录</p>
+            <div class="inp-box pos-r">
+                <span class="pos-a">账号</span>
+                <input type="text" id="phone" placeholder="请输入手机号">
+            </div>
+            <div class="inp-box pos-r">
+                <span class="pos-a">密码</span>
+                <input type="password" id="password" placeholder="请输入密码">
+            </div>
+            <div class="clearfix">
+                <a href="/wechat/forget_pass" class="fr f-p">忘记密码</a>
+            </div>
+
+            <div class="a-box">
+                <a href="javascript:void(0);" class="btn bind" onclick="on_click();">登录</a>
+                <a href="javascript:void(0);" onclick="href_url('/game.php/login/touristlogin')" class="btn reg bind">游客登录</a>
+
+                <a href="javascript:void(0);" onclick="href_url('/static/login/register.html')" class="btn reg bind">账号注册</a>
+                <!-- <a href="/static/login/register_phone.html" class="btn reg bind">手机号注册</a> -->
+                <a href="javascript:void(0);" onclick="href_url('/game.php/login/weixinlogin')" class="btn reg bind">微信登录</a>
+                <!-- <a href="javascript:alert('需要认证公众号部署')" class="btn reg bind">微信登录</a> -->
+
+                <a href="javascript:alert('QQ群：485841275 和 QQ：1037012585、643706581')" class="btn reg bind">加入我们</a>
+
+            </div>
+
+
+            <!-- <input type="hidden" name="" id="open_id" value="{$openid}" /> -->
+            <!-- <input type="hidden" name="" id="code" value="{$code}" /> -->
+        </div>
+    </div>
+</section>
+
+
+
+
+<script src="/static/login/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="/static/login/js/fastclick-jquery-1.8.3.js"></script>
+<script>
+
+
+function isWeiXin(){
+    var ua = navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+(function() {
+    FastClick.attach(document.body);
+        //do your thing.
+    
+    $("#wxAlert").click(function(){
+        $(this).hide();
+    }).on('touchmove',function(e){
+        e.preventDefault();
+    })
+    
+})();
+
+window.onload = function(){
+    if(isWeiXin()){
+        $("#wxAlert").show();
+    }
+}
+
+function href_url(url){
+    if(isWeiXin()){
+        $("#wxAlert").show();
+    }else{
+        window.location.href=url; 
+    }
+}
+
+
+$(function () {
+    FastClick.attach(document.body);
+});
+
+function on_click(){
+    // alert('wwww');
+// $('#payments_plan1').on('click', function(){
+    // $('#payments_plan_list').html('');
+    if(isWeiXin()){
+        $("#wxAlert").show();
+        return false;
+    }
+
+    $.ajax({
+        url: '/game.php/login/dologin',
+        type: 'POST',
+        // processData: false, // 告诉jQuery不要去处理发送的数据
+        // contentType: false // 告诉jQuery不要去设置Content-Type请求头
+        dataType:'json',
+        data:{
+                openid:$("#open_id").val(),
+                code:'',
+                phone:$("#phone").val(),
+                password:$("#password").val()
+            },
+        }).done(function (result) {
+            if (result) {
+                data = result;
+                // var data = $.parseJSON(result);
+                // if(parseInt(data.statusCode)>0){
+                //     alert(data.statusMsg);
+                // }else{
+                //     alert(data.statusMsg);
+                // }
+                if(parseInt(data.code)>=0){
+                    // alert(data.msg);
+                    // window.history.back();
+                    // WeixinJSBridge.invoke('closeWindow',{},function(res){
+                    window.location.href="/game.php"; 
+                    // });
+                }else{
+                    alert(data.msg);
+                }
+            } else {
+                alert("登录失败.");
+            }
+        }).fail(function (xhr, status) {
+            alert(JSON.stringify(status))
+        });
+    // });
+}
+
+</script>
+
+
+</body>
+</html>

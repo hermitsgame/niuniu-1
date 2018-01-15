@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>账号密码注册</title>
+    <meta name="keywords" content="开心牛牛-马克">
+    <meta name="description" content="开心牛牛-马克">
+    <script type="text/javascript" src="/static/login/js/rem.js"></script>
+    <link rel="stylesheet" href="/static/login/css/base.css" />
+    <link rel="stylesheet" href="/static/login/css/account.css" />
+</head>
+<body>
+<section class="wrap pos-r scroll scroll-active">
+    <div class="input-wrap">
+        <div class="form-box">
+            <!-- <p class="title">账号注册</p> -->
+
+            <div class="input-box pos-r bb-e6e6e6">
+                <input type="text" placeholder="输入手机号" id="username">
+            </div>
+            <div class="input-box pos-r" id="setPassword">
+                <input type="password" id="txtPassword">
+                <p id="likePlaceholder">注册密码，6-18位数字、字母组合</p>
+                <div class="btnsee webkit-box box-center" id="btnSee">
+                    <b class="block eye-close bg-size"></b>
+                </div>
+            </div>
+            <div class="pos-r agree-box">
+                <div class="error pos-a" id = "codeinfo" style="display:none"><i class="bg-size"></i></div>
+                <div class="agree pos-a" id="agree">
+                    <i class="bg-size checked" id="agreexieyi"></i> 我已阅读并同意《用户协议》
+                </div>
+            </div>
+
+            <div class="pr-30">
+                <div class="a-box">
+                    <a href="javascript:void(0);" class="btn finish" onclick="return sub();">注册</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="/static/login/js/fastclick-jquery-1.8.3.js"></script>
+<script>
+
+    function sub(){
+        var username = document.getElementById('username').value;
+        var pwd = document.getElementById('txtPassword').value;
+        // var code = document.getElementById('code').value; 
+        // var msgcode = document.getElementById('msgcode').value;
+        // var reg = /^1\d{10}$/; //定义正则表达式
+        var reg = /^(\d|[a-zA-Z])+$/;
+        if(!reg.test(username)){
+            $("#codeinfo").html('<i class="bg-size"></i>请输入正确手机号');
+            $("#codeinfo").show();
+            return false;
+        }
+        if(!username || !pwd ){
+            alert('请输入账号、密码！');
+            return false;
+        }
+        $.ajax({
+            type: 'post',
+            url: '/game.php/login/doregister.html',
+            data:{
+                username:username,
+                password:pwd
+            },            
+            dataType: 'json',
+            success: function(data){
+                var code = parseInt(data.code);
+                //alert(statuscode);
+                if(code != 0){
+                    $("#codeinfo").html('<i class="bg-size"></i>'+data.msg);
+                    $("#codeinfo").show();
+                }else{
+                     // alert('注册成功!');
+                     // window.history.back();
+                     window.location.href="/game.php"; 
+                     // WeixinJSBridge.invoke('closeWindow',{},function(res){
+                    // });
+                }
+            },
+            error: function(xhr, type){
+                alert('注册失败!');
+                return false;
+            }
+        });
+        
+        return false;
+        
+        
+        
+        
+    }
+</script>
+</body>
+</html>

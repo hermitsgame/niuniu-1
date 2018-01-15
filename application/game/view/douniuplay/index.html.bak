@@ -1,0 +1,84 @@
+<html>
+    <head> 
+        <meta charset="utf-8" /> 
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
+        <meta name="format-detection" content="telephone=no" /> 
+        <meta name="msapplication-tap-highlight" content="no" /> 
+        <title>{$room.room_number}号九人房间
+        </title> 
+        <link rel="stylesheet" type="text/css" href="/static/game9/css/bull_vue-2.0.3.css" /> 
+        <link rel="stylesheet" type="text/css" href="/static/game9/css/alert-1.1.css" /> 
+        <link rel="stylesheet" type="text/css" href="/static/game9/css/bullshop-1.0.css" /> 
+        <script type="text/javascript" src="/static/game9/js/fastclick.js"></script> 
+        <script type="text/javascript">
+
+            window.addEventListener('load', function () {
+                FastClick.attach(document.body);
+            }, false);
+
+            var newNum = "";
+            var per = window.innerWidth / 530;
+            var globalData = {
+                "card": "{$menberInfo['cards']}",
+                "roomNumber": "{$room.room_number}",
+                "baseUrl": "http://www.k5edu.com/",
+                "openId": "",
+                "socket": "ws://118.190.205.41:16667",
+                "roomUrl": "http://www.k5edu.com{:url('index', array('room_id' => input('room_id')))}",
+                "dealerNum": "18",
+                "fileUrl": "http://www.k5edu.com/",
+                "imageUrl": "http://www.k5edu.com/",
+                "roomStatus": '{$room.roomStatus}',
+                "scoreboard": '{$room.scoreboard}',
+                "session": 'ZWE0NWM3MTQwMjM5NjBlY2JhMmJkMzIyZjZmZmI4Y2M=',
+                "isAlertMsg": '0',
+                "alertMsg": '',
+                "isNotyMsg": "{$noticeInfo['status']}",
+                "notyMsg": "{$noticeInfo['content']}",
+                "notyTime": "{$noticeInfo['showtime']}",
+                "notySpeed": 10000,
+                //"hpUrl": "http://www.k5edu.com/game.php/index/index69.html",
+                "hpUrl": "/game.php/Myhome/homepage.html",
+                "mhUrl": "http://www.k5edu.com/game.php/index/index69.html",
+                "dealerName": " 棋娱坊",
+            };
+            var userData = {
+                "id": "{$menberInfo['id']}",
+                "accountId": "{$menberInfo['id']}",
+                "nickname": "{$menberInfo['nickname']}",
+                "avatar": "{$menberInfo['photo']}",
+                "isAuthPhone": "0",
+                "authCardCount": "10",
+                "phone": "",
+            };
+            var configData = {
+                "appId": "{$wxconfig['appId']}",
+                "timestamp": "{$wxconfig['timestamp']}",
+                "nonceStr": "{$wxconfig['nonceStr']}",
+                "signature": "{$wxconfig['signature']}",
+            };
+            var historyInfo = {
+                is_show: "{$historyInfo['is_show']}",
+                total_count: "{$historyInfo['total_count']}",
+                score: "{$historyInfo['score']}",
+                time: "{$historyInfo['time']}",
+            };
+            var coinList = [1, 2, 4, 5];
+        </script> 
+    </head> 
+    <body> 
+        <div style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; background: rgb(0, 0, 0); z-index: 115; display: none;" id="loading"> 
+            <div class="load4"> 
+                <div class="loader">
+                    Loading...
+                </div> 
+            </div> 
+        </div> 
+        <script type="text/javascript" src="/static/game9/js/canvas.js"></script> 
+        <script type="text/javascript" src="/static/game9/js/bull930-1.0.2.min.js"></script>
+
+        <iframe id="ping_iframe" src=" weixinping://iframe " style="display: none;"></iframe>
+        <iframe id="__WeixinJSBridgeIframe_SetResult" src="weixin://private/setresult/SCENE_HANDLEMSGFROMWX&amp;ZHVtbXk=" style="display: none;"></iframe>
+        <iframe id="__WeixinJSBridgeIframe" src="weixin://dispatch_message/" style="display: none;"></iframe>
+    </body>
+</html>

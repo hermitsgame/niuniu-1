@@ -1,0 +1,65 @@
+{include file="public/top"}
+<!--body wrapper start-->
+<div class="wrapper">
+    <div class="panel">
+
+        <header class="panel-heading">
+            会员管理
+            <span class="pull-right">
+                <!--<a href="{:url('add')}" class="btn btn-success btn-sm"><i class="fa fa-plus" ></i> 增加会员</a>-->
+            </span>
+
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <form class="form-inline" action="{:url('index')}" method="GET">
+                    <label class="control-label col-md-1">ID：</label>
+                    <input class="form-control form-control-inline col-md-2" type="number" size="12" name="ID" id="ID" value="">
+                    <label class="control-label col-md-2">微信昵称：</label>
+                    <input class="form-control form-control-inline col-md-2" type="text" size="32" name="nickname" id="nickname"  value="">
+                    <button class="btn btn-primary btn-sm" type="button" onclick="search_member()"><i class=" icon-search"></i>搜索</button>
+                </form>
+            </div>
+            <table class="table table-hover table-bordered">
+                <tbody>
+                <thead>
+                <th>ID</th>
+                <th width="220">昵称</th>
+                <th width="120">房卡数</th>
+                <th>金币</th>
+                <th>状态</th>
+                <th>得胜率</th>
+                <th>得胜率到期时间</th>
+                <th style="text-align:center">操作</th>
+                </thead>
+                {volist name="list" id="vo"} 
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.nickname}</td>
+                    <td>{$vo.cards}</td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.status}</td>
+                    <td>{$vo.rate}%</td>
+                    <td style="color:red;">{if condition="($vo.ratetimelimit != 0)"}{:date('Y-m-d H:i', $vo.ratetimelimit)}{/if}</td>
+                    <td style="text-align:center; width:120px;"><a href="{:url('delete', array('id' => $vo['id']))}" class="btn btn-danger btn-sm">删除</a> <a href="{:url('modify', array('id' => $vo['id']))}" class="btn btn-success btn-sm">修改</a></td>
+                </tr>
+                {/volist}
+                <tr>
+                    <td colspan="9" align="center">{$pages}</td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function search_member() {
+        var id = $("#ID").val();
+        var nickname = $("#nickname").val();
+        location.href = "/admin.php/member/index.html?ID="+id+"&nickname="+nickname
+    }
+</script>
+<!--body wrapper end-->
+{include file="public/bottom"}
+

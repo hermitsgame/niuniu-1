@@ -1,0 +1,113 @@
+
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8" >
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <title>邀请你玩游戏</title>
+        <script type="text/javascript" src="/static/home/js/fastclick.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/home/css/activity.css">
+        <link rel="stylesheet" type="text/css" href="/static/home/css/alert.css">
+        <script type="text/javascript">
+
+            window.addEventListener('load', function () {
+                FastClick.attach(document.body);
+            }, false);
+
+            var newNum = "";
+            var per = window.innerWidth / 530;
+            var globalData = {
+                "baseUrl": "{$Think.config.site_url}/",
+                "openId": "",
+                "dealerNum": "28",
+                "fileUrl": "{$Think.config.site_url}/",
+                "imageUrl": "{$Think.config.site_url}/",
+                "shareIcon": "{$Think.config.site_url}/static/home/image/invitation.png",
+                "shareUrl": "{$Think.config.site_url}/game.php/Myhome/groupInvite.html?dealer_num=23&code={$inviteInfo['account_code']}",
+                "inviteName": "{$inviteInfo['nickname']}",
+                "inviteCode": "{$inviteInfo['account_code']}",
+                "inviteAccountCode": "{$inviteInfo['account_code']}",
+                "inviteAvatar": "{$inviteInfo['headimgurl']}",
+                "isJoin": '0',
+            };
+            var userData = {
+                "accountId": "{$menberInfo['id']}",
+                "nickname": "{$menberInfo['nickname']}",
+                "avatar": "{$menberInfo['photo']}",
+            };
+            var configData = {
+                "appId": "{$wxconfig['appId']}",
+                "timestamp": "{$wxconfig['timestamp']}",
+                "nonceStr": "{$wxconfig['nonceStr']}",
+                "signature": "{$wxconfig['signature']}",
+            };
+
+        </script>
+
+    </head>
+
+
+    <body ng-controller="myCtrl" style="background: #000;" >
+        <div style="position: fixed;width:100%;height:100%;top:0;left:0;background: #000" id="loading">
+            <img src="/static/home/image/loading.gif" style="top: 40%;position: absolute;left: 50%;margin-left: -45px;margin-top: -45px;" />
+        </div>
+        <div class="main" style="display: none;">
+
+            <img src="/static/home/image/union_bg.jpg"  style="top: 0;left: 0;width: 100%;height: 100%;position: relative;">
+
+            <div class="alert" id="valert" ng-show="isShowAlert" >
+                <div class="alertBack"></div>
+                <div class="mainPart">
+                    <div class="backImg">
+                        <div class="blackImg"></div>
+                    </div>
+                    <div class="alertText">{{alertText}}</div>
+                    <div ng-show="alertType == 3">
+                        <div class="buttonLeft" ng-click="closeAlert()">确定</div>
+                        <div class="buttonRight" ng-click="closeAlert()">取消</div>
+                    </div>
+                    <div ng-show="alertType == 7">
+                        <div class="buttonMiddle" ng-click="closeAlert()">确定</div>
+                    </div>
+                    <div ng-show="alertType == 8">
+                    </div>
+                </div>
+            </div>
+
+            <div style="position: absolute;top: 10vh;left: 50%;margin-left: -25vh;height: 80vh;width: 50vh;" ng-if="showType == 1">
+                <img src="/static/home/image/union_card.jpg" style="position: absolute;top: 0;left: 1vh;width: 48vh;height: 100%;">
+                <img src="/static/home/image/union_card_bottom.png" style="position: absolute;bottom: 0;width: 50vh;height: 35.25vh;">
+                <div class="imgOpen" style="position: absolute;bottom: 10vh;left: 50%;margin-left: -10vh;width: 20vh;height: 20vh;backface-visibility:hidden;" ng-click="clickJoin()">
+                    <img  ng-src="{{joinImg}}" style="position: absolute;width: 20vh;height: 20vh;transform: rotate({{img.rotate}}deg);" >
+                </div>
+
+                <img ng-src="{{inviteAvatar}}" style="position: absolute;top: 12vh;left: 50%;margin-left: -6vh;width: 12vh;height: 12vh;border-radius: 6vh;">
+                <div style="position: absolute;top: 25vh;width: 100%;height: 5vh;line-height: 5vh;text-align: center;color: orange;font-size: 2.5vh">
+                    {{inviteName}}
+                </div>
+                <div style="position: absolute;top: 32vh;width: 100%;height: 5vh;line-height: 5vh;text-align: center;color: orange;font-size: 3vh;">
+                    邀请你玩游戏
+                </div>
+            </div>
+
+            <div style="position: absolute;top: 10vh;left: 50%;margin-left: -25vh;height: 80vh;width: 50vh;" ng-if="showType == 2">
+                <img  src="/static/home/image/union_card.jpg" style="position: absolute;top: 0;left: 0;width: 50vh;height: 100%;">
+                <img src="/static/home/image/union_finish.png" style="position: absolute;top: 29vh;left: 50%;margin-left: -6vh;width: 12vh;height: 12vh;">
+                <div style="position: absolute;top: 43vh;width: 100%;height: 5vh;text-align: center;font-size: 3vh;color: orange;font-weight: bold;">
+                    {{resultText}}
+                </div>
+            </div>
+
+
+        </div>
+
+    </body>
+
+    <script type="text/javascript" src="/static/home/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/static/home/js/angular.min.js"></script>
+    <script type="text/javascript" src="/static/home/js/base64.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" ></script>
+    <script type="text/javascript" src="/static/home/js/inviteDetail.js"></script>
+
+</html>

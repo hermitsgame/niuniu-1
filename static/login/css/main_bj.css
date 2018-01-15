@@ -1,0 +1,202 @@
+.m_header {
+  overflow: hidden;
+}
+.m_header .logo {
+  margin-left: 0.4rem;
+  margin-top: 0.4rem;
+  height: 0.52rem;
+  background: url(../images/logo@2x.png) no-repeat;
+  background-size: 0.52rem 0.52rem;
+  text-indent: 0.71rem;
+  color: #fff;
+  line-height: 0.52rem;
+}
+.m_main {
+  padding-top: 0.87rem;
+}
+.m_main h3 {
+  font-size: 0.36rem;
+  text-align: center;
+  color: #fff;
+  padding-bottom: 0.62rem;
+}
+.m_main .form .password,
+.m_main .form .userName {
+  display: block;
+  width: 6.31rem;
+  height: 0.96rem;
+  border-radius: 0.96rem 0.96rem;
+  margin: 0 auto;
+  outline: none;
+  text-indent: 1.25rem;
+  font-size: 0.30rem;
+  line-height: 0.96rem;
+}
+.m_main .form p {
+  margin: 0 auto;
+  position: relative;
+}
+.m_main .form p label {
+  position: absolute;
+  top: 0.22rem;
+  left: 0.47rem;
+  font-size: 0.36rem;
+}
+.m_main .form p:first-child {
+  width: 6.31rem;
+  padding-bottom: 0.42rem;
+}
+.m_main .form p:nth-child(2) {
+  width: 6.31rem;
+}
+.m_main .form p:nth-child(3) {
+  text-align: right;
+  padding-top: 0.36rem;
+  padding-right: 0.53rem;
+}
+.m_main .form p:nth-child(3) a {
+  font-size: 0.24rem;
+  color: #fff;
+  opacity: 0.4;
+}
+.m_main .form p:nth-child(4) {
+  padding-top: 0.8rem;
+}
+.m_main .form .bind {
+  display: block;
+  height: 0.88rem;
+  width: 6.9rem;
+  background-color: #7373ab;
+  text-align: center;
+  color: #fff;
+  line-height: 0.88rem;
+  font-size: 0.32rem;
+  margin: 0 auto;
+  margin-bottom: 0.45rem;
+  border-radius: 0.1rem;
+}
+.m_main .form .register {
+  display: block;
+  height: 0.88rem;
+  width: 6.9rem;
+  background-color: #515197;
+  border: 1px solid #a7a7ca;
+  text-align: center;
+  color: #fff;
+  line-height: 0.88rem;
+  font-size: 0.32rem;
+  margin: 0 auto;
+  border-radius: 0.1rem;
+}
+/*-----忘记密码------*/
+.lost .lostForm {
+  margin: 0.55rem 0.3rem;
+}
+.lost .inputBox {
+  width: 6.09rem;
+  margin: 0 auto;
+}
+.lost .inputBox p:first-child {
+  position: relative;
+  padding-bottom: 0.3rem;
+  color: #8D929C;
+  font-size: 0.24rem;
+}
+.lost .inputBox p:nth-child(2) {
+  position: relative;
+  height: 1rem;
+  border-bottom: 1px solid #E6E6E6;
+}
+.lost .inputBox p:nth-child(2) i {
+  display: block;
+  height: 0.3rem;
+  width: 0.3rem;
+  background: url(../images/clear.png) no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 0.4rem;
+  right: 0.3rem;
+  display: none;
+}
+.lost .inputBox p:nth-child(2) input {
+  height: 0.99rem;
+  outline: none;
+  border: none;
+  width: 100%;
+  font-size: 0.28rem;
+}
+.lost .inputBox p:nth-child(3) {
+  position: relative;
+  height: 1rem;
+  border-bottom: 1px solid #E6E6E6;
+}
+.lost .inputBox p:nth-child(3) input {
+  height: 0.99rem;
+  outline: none;
+  border: none;
+  width: 100%;
+  font-size: 0.28rem;
+}
+.lost .inputBox p:nth-child(3) a {
+  position: absolute;
+  top: 0.4rem;
+  right: 0;
+  display: block;
+  color: #50508F ;
+  border-bottom: 3px solid #515197;
+}
+.lost .inputBox p:nth-child(3) i {
+  display: block;
+  height: 0.3rem;
+  width: 0.3rem;
+  background: url(../images/clear.png) no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 0.4rem;
+  right: 1.5rem;
+  display: none;
+}
+.lost .inputBox p:nth-child(4) {
+  position: relative;
+  height: 1rem;
+  border-bottom: 1px solid #E6E6E6;
+}
+.lost .inputBox p:nth-child(4) input {
+  height: 0.99rem;
+  outline: none;
+  border: none;
+  width: 100%;
+  font-size: 0.28rem;
+}
+.lost .inputBox p:nth-child(4) i {
+  display: block;
+  height: 0.32rem;
+  width: 0.32rem;
+  background: url(../images/login_Close@2x.png) no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 0.4rem;
+  right: 0.3rem;
+}
+.lost .inputBox p:nth-child(4) .showPsw {
+  background: url(../images/login_open@2x.png) no-repeat;
+  background-size: contain;
+}
+.lost .inputBox p:nth-child(5) {
+  padding-top: 0.3rem;
+  padding-bottom: 1.0rem;
+}
+.lost .inputBox p:nth-child(5) span {
+  color: red;
+}
+.lost .subBtn a {
+  display: block;
+  height: 0.88rem;
+  width: 100%;
+  text-align: center;
+  line-height: 0.88rem;
+  background-color: #515197;
+  color: #fff;
+  border-radius: 0.1rem;
+  font-size: 0.32rem;
+}

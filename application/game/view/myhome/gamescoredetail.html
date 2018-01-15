@@ -1,0 +1,433 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+              content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <title>{$gameScoreDetail['room_number']}房间查询</title>
+
+        <script type="text/javascript" src="/static/js/fastclick.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/css/bullalert.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/alert.css">
+
+        <script type="text/javascript">
+
+            window.addEventListener('load', function () {
+                FastClick.attach(document.body);
+            }, false);
+
+            var newNum = "";
+            var per = window.innerWidth / 530;
+            var globalData = {
+                "baseUrl": "{$Think.config.site_url}/",
+                "openId": "",
+                "dealerNum": "28",
+                "gameType": '{$gameScoreDetail["game_type"]}',
+                "roomNumber": '{$gameScoreDetail["room_number"]}',
+                "scoreInfo": '{$scoreInfo}',
+            };
+            var userData = {
+                "accountId": "{$menberInfo['id']}",
+                "nickname": "{$menberInfo['nickname']}",
+                "avatar": "{$menberInfo['photo']}",
+                "uid": "{$menberInfo['id']}",
+            };
+            var configData = {
+                "appId": "{$wxconfig['appId']}",
+                "timestamp": "{$wxconfig['timestamp']}",
+                "nonceStr": "{$wxconfig['nonceStr']}",
+                "signature": "{$wxconfig['signature']}",
+            };
+
+            globalData.scoreInfo = eval('(' + globalData.scoreInfo + ')');
+
+            var gameIcons = {
+                "1": '/static/image/rc_icon_flowerwap.png',
+                "2": '/static/image/rc_icon_landlord.png',
+                "6": '/static/image/rc_icon_majiang.png',
+                "5": '/static/image/rc_icon_bull.png',
+                "4": '/static/image/rc_icon_texaspoker.png',
+                "3": '/static/image/rc_icon_showha.png',
+                "9": '/static/image/rc_icon_bull9.png',
+                "10": '/static/image/rc_icon_bullfight.png',
+                "11": '/static/image/rc_icon_28gang.png',
+                "12": '/static/image/rc_icon_sangong.png',
+            };
+
+            var gameNames = {
+                "1": '炸金花',
+                "2": '斗地主',
+                "6": '广东麻将',
+                "5": '六人斗牛',
+                "4": '德州扑克',
+                "3": '梭哈',
+                "9": '九人斗牛',
+                "10": '斗公牛',
+                "11": '二八杠',
+                "12": '三公',
+            };
+
+        </script>
+
+
+        <style type="text/css">
+            .gameItem{position: absolute;background-color: #291c4d;}
+            .rcIcon{position: absolute;top: 2vw;left: 3vw;width: 9.375vw;height: 9.375vw;}
+            .rcContent{position: absolute;left: 15.375vw;width: 50vw;height: 13.75vw;line-height: 13.75vw;font-size: 12pt;color: white;}
+            .rcArrow{position: absolute;right: 3vw;top: 4.0625vw;width: 3.125vw;height: 5.625vw;}
+            .sendRedpackage{position: absolute;width: 100%;height: 13.75vw;overflow: hidden;background-color: #291c4d;}
+            .redpackage{position: absolute;width: 100%;height: 13.75vw;overflow: hidden;background-color: #291c4d;}
+            .userList{position: absolute;width: 100%;height: 13.75vw;overflow: hidden;background-color: #291c4d;}
+            .datepicker{position: absolute;width: 100%;height: 12.5vw;overflow: hidden;background-color: #291c4d;}
+            .groupMenuDetail{position: absolute;width: 100%;height: 27.5vw;overflow: hidden;background-color: #291c4d;}
+            .gameMenu{position: absolute;width: 100%;height: 25vw;background-color: #291c4d;text-align: center;overflow: auto;}
+            .gameListItem{position: absolute;width: 18vw;height: 25vw;font-size: 12pt;color: white;text-align: center;}
+            .gameScoreTitle{position: absolute;width: 100%;height: 13vw;line-height: 13vw;font-size: 12pt;color: white;text-align: center;background-color: #291c4d;}
+            [v-cloak] {
+                display:none !important;
+            }
+
+            .cardOver .back{background:url("/static/home/image/cards.jpg");background-size:102.7vw 44vw;box-shadow:1px 1px 5px #333;border-radius: 1px;}
+            .cardOver .cardA14{background: url("/static/home/image/joker2_1.png");background-size:7.9vw 11vw;}
+            .cardOver .cardB14{background: url("/static/home/image/joker1_1.png");background-size:7.9vw 11vw;}
+            .cardOver .card{background: url("/static/home/image/card.png");background-size:7.9vw 11vw;}
+            .cardOver .cardundefined{background: url("/static/home/image/card.png");background-size:7.9vw 11vw;}
+            .cardOver .card-1{background: url("/static/home/image/card.png");background-size:7.9vw 11vw;}
+            .cardOver .cardA1{background-position: 0 -33vw;}
+            .cardOver .cardA2{background-position: -7.9vw -33vw;}
+            .cardOver .cardA3{background-position: -15.8vw -33vw;}
+            .cardOver .cardA4{background-position: -23.7vw -33vw;}
+            .cardOver .cardA5{background-position: -31.6vw -33vw;}
+            .cardOver .cardA6{background-position: -39.5vw -33vw;}
+            .cardOver .cardA7{background-position: -47.4vw -33vw;}
+            .cardOver .cardA8{background-position: -55.3vw -33vw;}
+            .cardOver .cardA9{background-position: -63.2vw -33vw;}
+            .cardOver .cardA10{background-position: -71.1vw -33vw;}
+            .cardOver .cardA11{background-position: -79vw -33vw;}
+            .cardOver .cardA12{background-position: -86.9vw -33vw;}
+            .cardOver .cardA13{background-position: -94.8vw -33vw;}
+            .cardOver .cardB1{background-position: 0 -22vw;}
+            .cardOver .cardB2{background-position: -7.9vw -22vw;}
+            .cardOver .cardB3{background-position: -15.8vw -22vw;}
+            .cardOver .cardB4{background-position: -23.7vw -22vw;}
+            .cardOver .cardB5{background-position: -31.6vw -22vw;}
+            .cardOver .cardB6{background-position: -39.5vw -22vw;}
+            .cardOver .cardB7{background-position: -47.4vw -22vw;}
+            .cardOver .cardB8{background-position: -55.3vw -22vw;}
+            .cardOver .cardB9{background-position: -63.2vw -22vw;}
+            .cardOver .cardB10{background-position: -71.1vw -22vw;}
+            .cardOver .cardB11{background-position: -79vw -22vw;}
+            .cardOver .cardB12{background-position: -86.9vw -22vw;}
+            .cardOver .cardB13{background-position: -94.8vw -22vw;}
+            .cardOver .cardC1{background-position: 0 0;}
+            .cardOver .cardC2{background-position: -7.9vw 0;}
+            .cardOver .cardC3{background-position: -15.8vw 0;}
+            .cardOver .cardC4{background-position: -23.7vw 0;}
+            .cardOver .cardC5{background-position: -31.6vw 0;}
+            .cardOver .cardC6{background-position: -39.5vw 0;}
+            .cardOver .cardC7{background-position: -47.4vw 0;}
+            .cardOver .cardC8{background-position: -55.3vw 0;}
+            .cardOver .cardC9{background-position: -63.2vw 0;}
+            .cardOver .cardC10{background-position: -71.1vw 0;}
+            .cardOver .cardC11{background-position: -79vw 0;}
+            .cardOver .cardC12{background-position: -86.9vw 0;}
+            .cardOver .cardC13{background-position: -94.8vw 0;}
+            .cardOver .cardD1{background-position: 0 -11vw;}
+            .cardOver .cardD2{background-position: -7.9vw -11vw;}
+            .cardOver .cardD3{background-position: -15.8vw -11vw;}
+            .cardOver .cardD4{background-position: -23.7vw -11vw;}
+            .cardOver .cardD5{background-position: -31.6vw -11vw;}
+            .cardOver .cardD6{background-position: -39.5vw -11vw;}
+            .cardOver .cardD7{background-position: -47.4vw -11vw;}
+            .cardOver .cardD8{background-position: -55.3vw -11vw;}
+            .cardOver .cardD9{background-position: -63.2vw -11vw;}
+            .cardOver .cardD10{background-position: -71.1vw -11vw;}
+            .cardOver .cardD11{background-position: -79vw -11vw;}
+            .cardOver .cardD12{background-position: -86.9vw -11vw;}
+            .cardOver .cardD13{background-position: -94.8vw -11vw;}
+        </style>
+
+    </head>
+
+    <body style="background-color: #0e0226">
+
+        <div id="loading" style="position: fixed;width:100%;height:100%;top:0;left:0;background: #000" >
+            <img src="/static/home/image/loading.gif" style="top: 40%;position: absolute;left: 50%;margin-left: -45px;margin-top: -45px;" />
+        </div>
+
+        <div class="main" id="app-main" style="position: relative; width: 100%;margin: 0 auto; background: #0e0226;" v-cloak>
+
+            <div class="alert" id="valert" v-show="isShowAlert">
+                <div class="alertBack"></div>
+                <div class="mainPart">
+                    <div class="backImg">
+                        <div class="blackImg"></div>
+                    </div>
+                    <div class="alertText">{{alertText}}</div>				
+                    <div v-show="alertType==3">
+                        <div class="buttonLeft" v-on:click="closeAlert">确定</div>
+                        <div class="buttonRight" v-on:click="closeAlert">取消</div>
+                    </div>			
+                    <div v-show="alertType==7">
+                        <div class="buttonMiddle" v-on:click="closeAlert">确定</div>
+                    </div>	
+                    <div v-show="alertType==8">
+                    </div>
+                    <div v-show="alertType==23">
+                        <div class="buttonMiddle" v-on:click="finishBindPhone()">确定</div>
+                    </div>				
+                </div>
+            </div>
+
+
+            <div class="gameMenu" style="top: 4vw;height: 15vw;line-height: 15vw;text-align: center;font-size: 12pt;color: white;">
+                {{ruleStartTime}}&nbsp&nbsp&nbsp至&nbsp&nbsp&nbsp{{ruleEndTime}}
+            </div>
+
+            <div class="gameScoreTitle" style="top: 22vw;height: 20vw;line-height: 6vw;text-align: center;font-size: 12pt;color:orange;">
+                <div style="position: absolute;top: 2vw;left: 5vw;width: 90vw;">
+                    {{ruleText}}
+                </div>
+            </div>
+
+            <div id="memberDiv" v-bind:style="'position: absolute;top: ' + (0.46 * width) + ';left: 0;width: 100%;'" >
+                <div style="position: relative;">
+                    <div v-for="(item, index) in gameScoreList" style="position: relative;width: 100%;height: 20vw;line-height: 20vw;background-color: #291c4d;text-align: center;margin-top: 2px;color: white;overflow:hidden;">
+                        <img v-bind:src="item.avatar" style="position: absolute;top: 3vw;left: 3vw;width: 14vw;height: 14vw;">
+                        <div style="position: absolute;top: 3vw;left: 20vw;height: 7vw;line-height: 7vw;font-size: 12pt;color: white;text-align: left;">
+                            {{item.name}}
+                        </div>
+                        <div style="position: absolute;top: 10vw;left: 20vw;height: 7vw;line-height: 7vw;font-size: 12pt;color: #39d7ff;text-align: center;">
+                            ID:&nbsp{{item.code}}
+                        </div>
+                        <div style="position: absolute;right: 5vw;font-size: 12pt;color: white;text-align: right;">
+                            {{item.score}}
+                        </div>
+                    </div>
+
+                    <div v-for="(item, index) in gameDetailList" v-bind:style="'position: relative;width: 100%;height: ' + item.dheight + 'px;line-height: ' + item.dHeight + 'px;background-color: #291c4d;text-align: center;margin-top: 2px;color: white;overflow:hidden;background-color: #0e0226'" v-show="gameType==5||gameType==9||gameType==12||gameType==13">
+                        <div style="position: relative;width: 100%;height: 15vw;">
+                            <div style="position: absolute;left: 3vw;bottom: 2vw;font-size: 2.7vh;">
+                                {{item.gnum}}/{{item.tnum}}局
+                            </div>
+                        </div>
+                        <div style="position: relative;width: 100%;height: 15vw;line-height: 15vw;background-color: #291c4d">
+                            <div style="position: absolute;left: 9vw;width: 30vw;color: orange;text-align: left;overflow: hidden;">
+                                用户名字
+                            </div>
+                            <div style="position: absolute;width: 100%;text-align:center;color: orange;overflow: hidden;">
+                                牌型
+                            </div>
+                            <div style="position: absolute;right: 20vw;color: orange;overflow: hidden;">
+                                倍数
+                            </div>
+                            <div style="position: absolute;right: 5vw;color: orange;overflow: hidden;">
+                                得分
+                            </div>
+                        </div>
+
+                        <div v-for="(user, index) in item.detail" style="position: relative;width: 100%;height: 15vw;line-height: 15vw;background-color: #291c4d;text-align: center;margin-top: 2px;color: white;overflow:hidden;">
+
+                            <div style="position: absolute;left: 4vw;width: 30vw;color: #39d7ff;text-align: left;font-size: 2.3vh;overflow: hidden;">
+                                <div style="margin-left: 5.5vw">{{user.name}}</div>
+                                <img src="/static/home/image/banker_icon.png" style="position: absolute;top: 5vw;height: 5vw;width: 5vw;" v-show="user.is_banker==1">
+
+                          
+                            </div>
+                            <div class="cardOver" style="position: absolute;left: 36vw;width: 35vw;height: 15vw;color: white;font-size: 2.3vh;z-index: 9000">
+
+                                <div style="position: absolute;left: -2vw;height: 15vw;font-size: 2.3vh;color: white;z-index: 90009" v-show="user.is_join==1">
+                                    {{user.card_type}}
+                                </div>
+                                <div class="back" v-bind:class="'card' + user.cards[0]" style="position: absolute;top:1.5vw;left: 6vw;width: 7.9vw;height: 11vw;z-index: 9000;" v-show="user.is_join==1">
+
+                                </div>
+                                <div class="back" v-bind:class="'card' + user.cards[1]" style="position: absolute;top:1.5vw;left: 10vw;width: 7.9vw;height: 11vw;z-index: 9001;" v-show="user.is_join==1">
+
+                                </div>
+                                <div class="back" v-bind:class="'card' + user.cards[2]" style="position: absolute;top:1.5vw;left: 14vw;width: 7.9vw;height: 11vw;z-index: 9002;" v-show="user.is_join==1">
+
+                                </div>
+                                <div class="back" v-bind:class="'card' + user.cards[3]" style="position: absolute;top:1.5vw;left: 18vw;width: 7.9vw;height: 11vw;z-index: 9003;" v-show="(gameType==5||gameType==9) && user.is_join==1">
+
+                                </div>
+                                <div  class="back" v-bind:class="'card' + user.cards[4]" style="position: absolute;top:1.5vw;left: 22vw;width: 7.9vw;height: 11vw;z-index: 9004;" v-show="(gameType==5||gameType==9) && user.is_join==1">
+                                </div>
+                            </div>
+                            <div style="position: absolute;right: 20vw;color: white;overflow: hidden;font-size: 2.3vh;" v-show="user.is_join==1">
+                                {{user.chip}}
+                            </div>
+                            <div style="position: absolute;right: 5vw;color: white;overflow: hidden;font-size: 2.3vh;" v-show="user.is_join==1">
+                                {{user.score}}
+                            </div>
+                            <div style="position: absolute;left: 36vw;width: 60vw;height: 15vw;line-height: 15vw;font-size: 2.3vh;" v-show="user.is_join==0">
+                                该局未参与游戏
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-for="(item, index) in gameDetailList" v-bind:style="'position: relative;width: 100%;height: ' + item.dheight + 'px;line-height: ' + item.dHeight + 'px;background-color: #291c4d;text-align: center;margin-top: 2px;color: white;overflow:hidden;background-color: #0e0226'" v-show="gameType==1">
+                        <div style="position: relative;width: 100%;height: 15vw;">
+                            <div style="position: absolute;left: 3vw;bottom: 2vw;font-size: 2.7vh;">
+                                {{item.gnum}}/{{item.tnum}}局
+                            </div>
+                        </div>
+                        <div style="position: relative;width: 100%;height: 15vw;line-height: 15vw;background-color: #291c4d">
+                            <div style="position: absolute;left: 4vw;width: 30vw;color: orange;text-align: left;overflow: hidden;">
+                                用户名字
+                            </div>
+                            <div style="position: absolute;width: 100%;text-align:center;color: orange;overflow: hidden;">
+                                牌型
+                            </div>
+                            <div style="position: absolute;right: 5vw;color: orange;overflow: hidden;">
+                                分数
+                            </div>
+                        </div>
+
+                        <div v-for="(user, index) in item.detail" style="position: relative;width: 100%;height: 15vw;line-height: 15vw;background-color: #291c4d;text-align: center;margin-top: 2px;color: white;overflow:hidden;">
+
+                            <div style="position: absolute;left: 4vw;width: 30vw;color: #39d7ff;text-align: left;font-size: 2.3vh;overflow: hidden;">
+                                <span>{{user.name}}</span>
+                                <span >
+                                    <img src="/static/home/image/banker_icon.png" style="height: 5vw;width: 5vw;" v-show="user.is_banker==1">
+                                </span>
+                            </div>
+                            <div class="cardOver" style="position: absolute;left: 36vw;width: 35vw;height: 15vw;color: white;font-size: 2.3vh;z-index: 9000">
+
+                                <div style="position: absolute;left: -2vw;height: 15vw;font-size: 2.3vh;color: white;z-index: 90009" v-show="user.is_join==1">
+                                    {{user.card_type}}
+                                </div>
+                                <div class="back" v-bind:class="'card' + user.cards[0]" style="position: absolute;top:1.5vw;left: 7vw;width: 7.9vw;height: 11vw;z-index: 9000;" v-show="user.is_join==1">
+
+                                </div>
+                                <div class="back" v-bind:class="'card' + user.cards[1]" style="position: absolute;top:1.5vw;left: 16vw;width: 7.9vw;height: 11vw;z-index: 9001;" v-show="user.is_join==1">
+
+                                </div>
+                                <div class="back" v-bind:class="'card' + user.cards[2]" style="position: absolute;top:1.5vw;left: 25vw;width: 7.9vw;height: 11vw;z-index: 9002;" v-show="user.is_join==1">
+                                </div>
+                                <div style="position: absolute;right: -20vw;color: white;overflow: hidden;font-size: 2.3vh;z-index: 9999" v-show="user.is_join==1">
+                                    {{user.chip}}
+                                </div>
+                                <div style="position: absolute;left: 0;width: 50vw;height: 15vw;line-height: 15vw;font-size: 2.3vh;" v-show="user.is_join==0">
+                                    该局未参与游戏
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="28gang" style="margin-top: 5vw;" v-for="(g, index) in player_array" v-show="gameType==11">
+                    <div style="position:relative">
+                        <div style="color: white;font-size: 12pt;margin-left: 3vw;">{{g.game_num}}/{{g.total_num}}局  <a v-show="g.half==1">上半场</a><a v-show="g.half==2">下半场</a></div>
+                        <div style="position: relative;background-color: #291c4d;height:15vw;width:100%;margin-top:2vw">
+                            <div style="position: absolute;width: 28vw;color:#e2bd31;line-height:15vw;left: 30vw;font-size: 12pt;"> 位1 </div>
+                            <img v-bind:src="'/static/home/image/icon_banker.png'" 
+                                 style="position: absolute;width: 5vw;color:white;left:37vw;top:5vw" v-if="g.banker_index==0">
+                            <img v-bind:src="'/static/home/image/icon_xian.png'" 
+                                 style="position: absolute;width: 5vw;color:white;left:37vw;top:5vw" v-if="g.banker_index!=0">
+                            <div style="position: absolute;width: 28vw;color:#e2bd31;line-height:15vw;left: 47vw;font-size: 12pt;"> 位2 </div>
+                            <img v-bind:src="'/static/home/image/icon_banker.png'" 
+                                 style="position: absolute;width: 5vw;left:54vw;top:5vw" v-if="g.banker_index==1">
+                            <img v-bind:src="'/static/home/image/icon_xian.png'" 
+                                 style="position: absolute;width: 5vw;left:54vw;top:5vw" v-if="g.banker_index!=1">
+                            <div style="position: absolute;width: 28vw;color:#e2bd31;line-height:15vw;left: 64vw;font-size: 12pt;"> 位3 </div>
+                            <img v-bind:src="'/static/home/image/icon_banker.png'" 
+                                 style="position: absolute;width: 5vw;left:71vw;top:5vw" v-if="g.banker_index==2">
+                            <img v-bind:src="'/static/home/image/icon_xian.png'" 
+                                 style="position: absolute;width: 5vw;left:71vw;top:5vw" v-if="g.banker_index!=2">
+                            <div style="position: absolute;width: 10vw;color:#e2bd31;line-height:15vw;left: 81vw;font-size: 12pt;"> 位4 </div>
+                            <img v-bind:src="'/static/home/image/icon_banker.png.png'" 
+                                 style="position: absolute;width: 5vw;left:88vw;top:5vw" v-if="g.banker_index==3">
+                            <img v-bind:src="'/static/home/image/icon_xian.png'" 
+                                 style="position: absolute;width: 5vw;left:88vw;top:5vw" v-if="g.banker_index!=3">
+                        </div>
+
+                        <div style="position: relative;background-color: #291c4d;height:15vw;width:100%;margin-top:1vw">
+                            <div style="position: absolute;left: 30vw;text-align: center;"> 
+                                <img v-bind:src="'/static/home/image/card'+g.cardinfo[0].c[0]+'.png'" style="position: absolute;width: 5vw;top:2vw;background-color: white;">
+                                <img v-bind:src="'/static/home/image/card'+g.cardinfo[0].c[1]+'.png'" style="position: absolute;width: 5vw;top:2vw;left:7vw;background-color: white;">
+                                <div style="position: absolute; width: 12vw; color:#3acbf3; line-height:5vw;  left:6vw;margin-left:-6vw; top: 10vw; text-align: center;font-size: 2.2vh;">{{g.cardinfo[0].cardType}}</div>
+                            </div>
+                            <div style="position: absolute;left: 47vw;text-align: center"> 
+                                <img v-bind:src="'/static/home/image/card'+g.cardinfo[1].c[0]+'.png'" style="position: absolute;width: 5vw;top:2vw;background-color: white;">
+                                <img v-bind:src="'/static/home/image/card'+g.cardinfo[1].c[1]+'.png'" style="position: absolute;width: 5vw;top:2vw;left:7vw;background-color: white;">
+                                <div style="position: absolute; width: 12vw; color:#3acbf3; line-height:5vw;  left:6vw;margin-left:-6vw; top: 10vw; text-align: center;font-size: 2.2vh;">{{g.cardinfo[1].cardType}}</div>
+                            </div>
+                            <div style="position: absolute;left: 64vw;text-align: center"> 
+                                <img v-bind:src="'/static/home/image/card'+g.cardinfo[2].c[0]+'.png'" style="position: absolute;width: 5vw;top:2vw;background-color: white;">
+                                <img v-bind:src="'/static/home/image/card'+g.cardinfo[2].c[1]+'.png'" style="position: absolute;width: 5vw;top:2vw;left:7vw;background-color: white;">
+                                <div style="position: absolute; width: 12vw; color:#3acbf3; line-height:5vw;  left:6vw;margin-left:-6vw; top: 10vw; text-align: center;font-size: 2.2vh;">{{g.cardinfo[2].cardType}}</div>
+                            </div>
+                            <div style="position: absolute;left: 81vw;text-align: center"> 
+                                <img v-bind:src="'/static/home/image/card'+g.cardinfo[3].c[0]+'.png'" style="position: absolute;width: 5vw;top:2vw;background-color: white;">
+                                <img v-bind:src="'/static/home/image/card'+g.cardinfo[3].c[1]+'.png'" style="position: absolute;width: 5vw;top:2vw;left:7vw;background-color: white;">
+                                <div style="position: absolute; width: 12vw; color:#3acbf3; line-height:5vw;  left:6vw;margin-left:-6vw; top: 10vw; text-align: center;font-size: 2.2vh;">{{g.cardinfo[3].cardType}}</div>
+                            </div>
+                        </div>
+
+                        <div style="position: relative;background-color: #291c4d;height:15vw;width:100%;margin-top:1vw">
+                            <div style="position: absolute;left: 4vw;text-align: center"> 
+                                <div style="color:#e2bd31;font-size: 2.3vh;width: 22vw;line-height:15vw;text-align: center;">玩家名字</div>
+                            </div>
+                            <div style="position: absolute;left: 30vw;text-align: center;padding-top: 1vw"> 
+                                <div style="color:#e2bd31;font-size: 2.3vh;width: 12vw;line-height:7vw;">下注</div>
+                                <div style="color:#e2bd31;font-size: 2.3vh;width: 12vw;line-height:7vw;">/得分</div>
+                            </div>
+                            <div style="position: absolute;left: 47vw;text-align: center;padding-top: 1vw"> 
+                                <div style="color:#e2bd31;font-size: 2.3vh;width: 12vw;line-height:7vw;">下注</div>
+                                <div style="color:#e2bd31;font-size: 2.3vh;width: 12vw;line-height:7vw;">/得分</div>
+                            </div>
+                            <div style="position: absolute;left: 64vw;text-align: center;padding-top: 1vw"> 
+                                <div style="color:#e2bd31;font-size: 2.3vh;width: 12vw;line-height:7vw;">下注</div>
+                                <div style="color:#e2bd31;font-size: 2.3vh;width: 12vw;line-height:7vw;">/得分</div>
+                            </div>
+                            <div style="position: absolute;left: 81vw;text-align: center;padding-top: 1vw"> 
+                                <div style="color:#e2bd31;font-size: 2.3vh;width: 12vw;line-height:7vw;">下注</div>
+                                <div style="color:#e2bd31;font-size: 2.3vh;width: 12vw;line-height:7vw;">/得分</div>
+                            </div>
+                        </div>
+
+                        <div v-for="p in g.player">
+                            <div style="position: relative;background-color: #291c4d;height:15vw;width:100%;margin-top:1vw">
+                                <div style="position: absolute;left: 4vw;height: 15vw;line-height: 15vw;width: 26vw;text-align: center;overflow: hidden;"> 
+                                    <img v-bind:src="'/static/home/image/icon_banker.png'" style="position: absolute;width: 5vw;height: 5vw;left:0vw;top:5vw" v-if="p.isb==1">
+                                    <div style="position: absolute;left: 5.5vw;color:#3acbf3;font-size: 2.3vh;height: 15vw;line-height:15vw;text-align: left;">{{p.n}}</div>
+                                </div>
+                                <div style="position: absolute;left: 30vw;text-align: center;padding-top: 2vw"> 
+                                    <div style="color:white;font-size: 12pt;width: 12vw;line-height:6vw;">{{p.coin[0].mb}}</div>
+                                    <div style="color:#3acbf3;font-size: 12pt;width: 12vw;line-height:6vw;">{{p.coin[0].s}}</div>
+                                </div>
+                                <div style="position: absolute;left: 47vw;text-align: center;padding-top: 2vw"> 
+                                    <div style="color:white;font-size: 12pt;width: 12vw;line-height:6vw;">{{p.coin[1].mb}}</div>
+                                    <div style="color:#3acbf3;font-size: 12pt;width: 12vw;line-height:6vw;">{{p.coin[1].s}}</div>
+                                </div>
+                                <div style="position: absolute;left: 64vw;text-align: center;padding-top: 2vw"> 
+                                    <div style="color:white;font-size: 12pt;width: 12vw;line-height:6vw;">{{p.coin[2].mb}}</div>
+                                    <div style="color:#3acbf3;font-size: 12pt;width: 12vw;line-height:6vw;">{{p.coin[2].s}}</div>
+                                </div>
+                                <div style="position: absolute;left: 81vw;text-align: center;padding-top: 2vw"> 
+                                    <div style="color:white;font-size: 12pt;width: 12vw;line-height:6vw;">{{p.coin[3].mb}}</div>
+                                    <div style="color:#3acbf3;font-size: 12pt;width: 12vw;line-height:6vw;">{{p.coin[3].s}}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+    <script type="text/javascript" src="/static/home/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/static/home/js/bscroll.min.js"></script>
+    <script type="text/javascript" src="/static/home/js/base64.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="/static/home/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/home/js/vue-resource.min.js"></script>
+    <script type="text/javascript" src="/static/home/js/scoreDetail-1.0.6.js"></script>
+</html>
+
+

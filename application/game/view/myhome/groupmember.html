@@ -1,0 +1,163 @@
+<!--成员页面GET /gscore/groupMember?dealer_num=28 HTTP/1.1-->
+<!--
+请求成员：
+POST /gscore/getGroupMemberList
+请求数据:
+{"account_id":"58383","page":1,"dealer_num":"28"}
+返回数据：
+{"result":0,"data":[{"account_code":"258488","nickname":"5LiR55S35p2l5LqG","headimgurl":"http:\/\/wx.qlogo.cn\/mmopen\/vi_32\/Q0j4TwGTfTKLKekGVPdTIFRbGtE7xTgg3pSX3fgwU90p8P3mjeMsIA9FiaCdVP4lqsxhhVTwvFPicXIFzMliaEeDw\/0","status":"2"},{"account_code":"258506","nickname":"5LyR6Zey5pe26Ze0","headimgurl":"http:\/\/wx.qlogo.cn\/mmopen\/Q3auHgzwzM4puZN7pwOjeWpoNDzn4K19wGZgBV86WOHUs0njibHJ8lg53djSQLrmss2M3gXAAv2MYYCOhm6lXvJB6CicaXfsiawGm1DQYJ2L7w\/0","status":"2"}],"result_message":"\u83b7\u53d6\u73a9\u5bb6\u6218\u7ee9\u5217\u8868","sum_page":1,"page":1}
+-->
+<!--
+请求开房记录:
+POST /gscore/getRoomList
+请求数据：
+{"account_id":"58383","page":1,"dealer_num":"28","game_type":9}
+返回数据：
+{"result":0,"data":[],"result_message":"\u83b7\u53d6\u7528\u6237\u5f00\u623f\u8bb0\u5f55","sum_page":1,"page":1}
+-->
+<html>
+    <head>
+        <meta charset="utf-8" >
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <title>成员</title>
+
+        <script type="text/javascript" src="/static/home/js/fastclick.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/static/home/css/bull_vue-1.0.0.css">
+        <link rel="stylesheet" type="text/css" href="/static/home/css/bullalert.css">
+        <link rel="stylesheet" type="text/css" href="/static/home/css/bullshop.css">
+        <link rel="stylesheet" type="text/css" href="/static/home/css/alert.css">
+
+        <script type="text/javascript">
+
+            window.addEventListener('load', function () {
+                FastClick.attach(document.body);
+            }, false);
+
+            var newNum = "";
+            var per = window.innerWidth / 530;
+            var globalData = {
+                "baseUrl": "{$Think.config.site_url}/",
+                "openId": "",
+                "dealerNum": "28",
+            };
+            var userData = {
+                "accountId": "{$menberInfo['id']}",
+                "nickname": "{$menberInfo['nickname']}",
+                "avatar": "{$menberInfo['photo']}",
+                "uid": "258488",
+            };
+              var configData = {
+                "appId": "{$wxconfig['appId']}",
+                "timestamp": "{$wxconfig['timestamp']}",
+                "nonceStr": "{$wxconfig['nonceStr']}",
+                "signature": "{$wxconfig['signature']}",
+            };
+
+        </script>
+
+        <style type="text/css">
+            .gameItem{position: absolute;background-color: #291c4d;}
+            .rcIcon{position: absolute;top: 2vw;left: 3vw;width: 9.375vw;height: 9.375vw;}
+            .rcContent{position: absolute;left: 15.375vw;width: 50vw;height: 13.75vw;line-height: 13.75vw;font-size: 12pt;color: white;}
+            .rcArrow{position: absolute;right: 3vw;top: 4.0625vw;width: 3.125vw;height: 5.625vw;}
+            .sendRedpackage{position: absolute;width: 100%;height: 13.75vw;overflow: hidden;background-color: #291c4d;}
+            .redpackage{position: absolute;width: 100%;height: 13.75vw;overflow: hidden;background-color: #291c4d;}
+            .userList{position: absolute;width: 100%;height: 13.75vw;overflow: hidden;background-color: #291c4d;}
+            .datepicker{position: absolute;width: 100%;height: 12.5vw;overflow: hidden;background-color: #291c4d;}
+            .groupMenuDetail{position: absolute;width: 100%;height: 27.5vw;overflow: hidden;background-color: #291c4d;}
+            .gameMenu{position: absolute;width: 100%;height: 25vw;background-color: #291c4d;text-align: center;overflow: hidden;}
+            .gameListItem{position: absolute;width: 18vw;height: 25vw;font-size: 12pt;color: white;text-align: center;}
+            .gameScoreTitle{position: absolute;width: 100%;height: 13vw;line-height: 13vw;font-size: 12pt;color: white;text-align: center;background-color: #291c4d;}
+            [v-cloak] {
+                display:none !important;
+            }
+        </style>
+
+    </head>
+
+    <body style="background-color: #0e0226">
+        <div id="loading" style="position: fixed;width:100%;height:100%;top:0;left:0;background: #000" >
+            <img src="/static/home/image/loading.gif" style="top: 40%;position: absolute;left: 50%;margin-left: -45px;margin-top: -45px;" />
+        </div>
+
+        <div class="main" id="app-main" style="position: relative; width: 100%;margin: 0 auto; background: #0e0226;" v-cloak>
+
+            <div class="alert" id="valert" v-show="isShowAlert">
+                <div class="alertBack"></div>
+                <div class="mainPart">
+                    <div class="backImg">
+                        <div class="blackImg"></div>
+                    </div>
+                    <div class="alertText">{{alertText}}</div>				
+                    <div v-show="alertType==3">
+                        <div class="buttonLeft" v-on:click="closeAlert">确定</div>
+                        <div class="buttonRight" v-on:click="closeAlert">取消</div>
+                    </div>			
+                    <div v-show="alertType==7">
+                        <div class="buttonMiddle" v-on:click="closeAlert">确定</div>
+                    </div>	
+                    <div v-show="alertType==8">
+                    </div>
+                    <div v-show="alertType==23">
+                        <div class="buttonMiddle" v-on:click="finishBindPhone()">确定</div>
+                    </div>
+                    <div v-show="alertType==41">
+                        <div class="buttonLeft" v-on:click="closeAlert">取消</div>
+                        <div class="buttonRight" v-on:click="confirmAgree">确定</div>
+                    </div>	
+                    <div v-show="alertType==42">
+                        <div class="buttonLeft" v-on:click="closeAlert">取消</div>
+                        <div class="buttonRight" v-on:click="confirmDisagree">确定</div>
+                    </div>	
+                    <div v-show="alertType==43">
+                        <div class="buttonLeft" v-on:click="closeAlert">取消</div>
+                        <div class="buttonRight" v-on:click="confirmRemove">确定</div>
+                    </div>						
+                </div>
+            </div>
+
+
+            <div style="'position: absolute;top: 14vw;left: 0;width: 100%;'" >
+                <div style="position: relative;top: 4vw;">
+                    <div v-for="(item, index) in gameScoreList" style="position: relative;width: 100%;height: 18vw;background-color: #291c4d;text-align: center;margin-top: 2px;color: white;overflow:hidden;" >
+                        <img v-bind:src="item.avatar" style="position: absolute;top: 3vw;left: 3vw;width: 12vw;height: 12vw;">
+
+                        <div style="position: absolute;top:3vw;width: 100%;left: 18vw;font-size: 12pt;color: white;text-align: left;">
+                            {{item.name}}
+                        </div>
+                        <div style="position: absolute;top: 10vw;width: 100%;left: 18vw;font-size: 12pt;color: #39d7ff;text-align: left;">
+                            ID:{{item.code}}
+                        </div>
+
+                        <div style="position: absolute;right: 28vw;top: 5vw;width: 18vw;height: 8vw;line-height: 8vw;border-radius: 0.5vw;background-color: rgb(112,181,213);text-align: center;font-size: 2.5vh;" v-show="item.status==1" v-on:click="clickAgree(item)">
+                            同意
+                        </div>
+                        <div style="position: absolute;right: 5vw;top: 5vw;width: 18vw;height: 8vw;line-height: 8vw;border-radius: 0.5vw;background-color: rgb(198,146,53);text-align: center;font-size: 2.5vh;" v-show="item.status==1" v-on:click="clickDisagree(item)">
+                            拒绝
+                        </div>
+                        <div style="position: absolute;right: 5vw;top: 5vw;width: 18vw;height: 8vw;line-height: 8vw;border-radius: 0.5vw;background-color: rgb(198,146,53);text-align: center;font-size: 2.5vh;" v-show="item.status==2" v-on:click="clickRemove(item)">
+                            踢出
+                        </div>
+                    </div>
+                    <div id="moretext" style="position: relative;margin-top: 4px;color: #39d7ff;height: 14vw;text-align: center;line-height: 14vw;font-size: 2.2vh;background-color: #291c4d;display: none;" v-on:click="clickMore">
+                        点击加载更多
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </body>
+
+    <script type="text/javascript" src="/static/home/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/static/home/js/bscroll.min.js" ></script>
+    <script type="text/javascript" src="/static/home/js/base64.js" ></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" ></script>
+    <script type="text/javascript" src="/static/home/js/vue.min.js" ></script>
+    <script type="text/javascript" src="/static/home/js/vue-resource.min.js" ></script>
+    <script type="text/javascript" src="/static/home/js/gMember-1.0.0.js"></script>
+
+</html>
